@@ -1,7 +1,7 @@
 extension SKLabelNode {
-    func wrapIn(targetWidth: CGFloat, paragraphSpace: CGFloat? = nil) -> SKLabelNode {
+    func wrapIn(targetWidth: CGFloat, paragraphSpace: CGFloat? = nil) {
         guard let text = text else {
-            return self
+            return
         }
 
         let outputLabel = SKLabelNode()
@@ -52,8 +52,14 @@ extension SKLabelNode {
             
             outputLabel.addChild(label)
         }
-
-        return outputLabel
+        
+        for child in children {
+            if child is SKLabelNode {
+                child.removeFromParent()
+            }
+        }
+        self.text = nil
+        addChild(outputLabel)
     }
     
     fileprivate func getSubLabel() -> SKLabelNode {
